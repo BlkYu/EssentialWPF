@@ -2,11 +2,17 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         Title="Hello World" Height="450" Width="800">
+    <Window.Resources>
+        <SolidColorBrush x:Key="bg" Color="Red"/>
+    </Window.Resources>
+
     <WrapPanel>
-        <Button>こんにちは！</Button>
-        <Button>第2のボタン</Button>
-        <TextBox>編集可能なテキストボックス</TextBox>
-        <CheckBox>チェックボックス</CheckBox>
+        <Button Background="{StaticResource bg}"
+            Click="HowdyClicked">こんにちは！</Button>
+        <Button Background="{StaticResource bg}">第2のボタン</Button>
+        <TextBox x:Name="_text1"
+                 HorizontalAlignment="Center">編集可能なテキストボックス</TextBox>
+        <CheckBox Content="{Binding ElementName=_text1, Path=HorizontalAlignment}"/>
         <Slider Width="75" Minimum="0" Maximum="100" Value="50"/>
     </WrapPanel>
 </Window>
