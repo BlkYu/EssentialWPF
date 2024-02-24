@@ -1,18 +1,54 @@
 ﻿<Window x:Class="Chapter1.MyWindow"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        Title="Hello World" Height="450" Width="800">
+        Title="Hello World">
     <Window.Resources>
         <SolidColorBrush x:Key="bg" Color="Red"/>
     </Window.Resources>
 
-    <WrapPanel>
-        <Button Background="{StaticResource bg}"
-            Click="HowdyClicked">こんにちは！</Button>
-        <Button Background="{StaticResource bg}">第2のボタン</Button>
-        <TextBox x:Name="_text1"
-                 HorizontalAlignment="Center">編集可能なテキストボックス</TextBox>
-        <CheckBox Content="{Binding ElementName=_text1, Path=HorizontalAlignment}"/>
-        <Slider Width="75" Minimum="0" Maximum="100" Value="50"/>
-    </WrapPanel>
+    <DockPanel>
+        <WrapPanel x:Name="panel" DockPanel.Dock="Top">
+            <Button Background="{StaticResource bg}"
+                Click="HowdyClicked">こんにちは！</Button>
+            <Button Background="{StaticResource bg}">第2のボタン</Button>
+            <TextBox x:Name="_text1"
+                     HorizontalAlignment="Center">編集可能なテキストボックス</TextBox>
+            <CheckBox Content="{Binding ElementName=_text1, Path=HorizontalAlignment}"/>
+            <Slider Width="75" Minimum="0" Maximum="100" Value="50"/>
+        </WrapPanel>
+        <Viewport3D>
+            <Viewport3D.Camera>
+                <PerspectiveCamera LookDirection="-.7,-.8,-1"
+                                   Position="3.8,4,4"
+                                   FieldOfView="17"
+                                   UpDirection="0,1,0"/>
+            </Viewport3D.Camera>
+            <ModelVisual3D>
+                <ModelVisual3D.Content>
+                    <Model3DGroup>
+                        <PointLight Position="3.8,4,4"
+                                    Color="White"
+                                    Range="7"
+                                    ConstantAttenuation="1.0"/>
+                        <GeometryModel3D>
+                            <GeometryModel3D.Geometry>
+                                <MeshGeometry3D TextureCoordinates="0,0 1,0 0,-1 1,-1 0,0 1,0 0,-1 0,0"
+                                                Positions="0,0,0 1,0,0 0,1,0 1,1,0 0,1,-1 1,1,-1 1,1,-1 1,0,-1"
+                                                TriangleIndices="0,1,2 3,2,1 4,2,3 5,4,3 6,3,1 7,6,1"/>
+                            </GeometryModel3D.Geometry>
+                            <GeometryModel3D.Material>
+                                <DiffuseMaterial>
+                                    <DiffuseMaterial.Brush>
+                                        <VisualBrush Viewport="0,0,.5,.25"
+                                                     TileMode="Tile"
+                                                     Visual="{Binding ElementName=panel}"/>
+                                    </DiffuseMaterial.Brush>
+                                </DiffuseMaterial>
+                            </GeometryModel3D.Material>
+                        </GeometryModel3D>
+                    </Model3DGroup>
+                </ModelVisual3D.Content>
+            </ModelVisual3D>
+        </Viewport3D>
+    </DockPanel>
 </Window>
